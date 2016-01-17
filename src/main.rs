@@ -7,7 +7,7 @@ use getopts::Options;
 fn main() {
     let args: Vec<String> = env::args().collect();
     let level = level(&args);
-    print_files(Path::new("./"), "", "", level).unwrap();
+    print_files(Path::new("."), "", "", level).unwrap();
 }
 
 fn level(args: &Vec<String>) -> Option<u32> {
@@ -26,17 +26,17 @@ fn level(args: &Vec<String>) -> Option<u32> {
 //   print usage
 //   allow directory to be specified, default to .
 //   check level option works the same as UNIX tree
-//   put on github
 //   documentation comments
 fn print_files(path: &Path, indent: &str, child_indent: &str, level: Option<u32>) -> io::Result<()> {
     match path.file_name().and_then(|os_str| os_str.to_str()) {
         Some(name) => println!("{}{}", indent, name),
-        None => println!("./"),
+        None => println!(" ."),
     }
     if path.is_dir() {
         // Print the children if no level was specified or if the remaining level is greater than zero
         let print_children = level.map(|l| l > 0).unwrap_or(true);
         if print_children {
+            // Need a peekable iterator to decide whether a child node is the final node
             let mut children = try!(path.read_dir()).peekable();
             // Can't use a for loop because the loop borrows the iterator mutably which prevents the call to peek()
             loop {
