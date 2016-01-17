@@ -1,0 +1,7 @@
+[package]
+name = "tree"
+version = "0.1.0"
+authors = ["C.J.Kent <cjkent@hotmail.com>"]
+
+[dependencies]
+getopts = "0.2"
